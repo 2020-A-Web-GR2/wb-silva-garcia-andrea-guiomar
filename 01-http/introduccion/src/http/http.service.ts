@@ -1,3 +1,3 @@
-export class HttpService {
+export class HttpJuegoService {
     
 }

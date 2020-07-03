@@ -1,12 +1,15 @@
 import {Module} from "@nestjs/common";
+import {HttpJuegoController} from "./http.controller";
 
 
 @Module({
     imports:[],
-    controllers:[],
+    controllers:[
+        HttpJuegoController
+    ],
     providers:[]
 })
 
-export class HttpModule {
+export class HttpJuegoModule {
 
 }
