@@ -6,7 +6,7 @@ async function bootstrap() {
   /*
   **AQUI CONFIGURACION
   * ANTES DEL APP.LISTEN
-  *LENGUAJE
+  *LENGUAJE typescript
 
    */
 

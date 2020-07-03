@@ -1,7 +1,12 @@
-// @nombre() -> decorador
-import {MODULE} from "@nestjs/common";
+import {Module} from "@nestjs/common";
 
-@MODULE
+
+@Module({
+    imports:[],
+    controllers:[],
+    providers:[]
+})
+
 export class HttpModule {
-    
+
 }
