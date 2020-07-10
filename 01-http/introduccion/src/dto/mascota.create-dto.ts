@@ -1,0 +1,6 @@
+// @IsAlpha()
+
+//@IsNotEmpty()
+
+//@IsBoolean()
+//@Maxlength

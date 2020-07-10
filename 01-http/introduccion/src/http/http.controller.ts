@@ -1,7 +1,7 @@
 //@Name() -> decorador
 
 
-import {BadRequestException, Controller, Delete, Get, Header, HttpCode, Param, Post} from "@nestjs/common";
+import {BadRequestException, Body, Controller, Delete, Get, Header, HttpCode, Param, Post, Query} from "@nestjs/common";
 //funciona con el protocolo http
 //servidor definir la URL
 //divifimos el controlador con prefijos
@@ -60,5 +60,28 @@ export class HttpJuegoController {
 
 
     }
+    @Get('/pametros-consulta')
+    parametrosConsulta(
+        @Query()
+            parametrosConsulta
+
+    ){
+        const tieneNombreApellido=parametrosConsulta.nombre && parametrosConsulta.apellido
+        console.log('parametrosDeConsulta',parametrosConsulta)
+        if(tieneNombreApellido){
+            return  parametrosConsulta.nombre+" "+parametrosConsulta.apellido+ ':D'
+        }else{
+            return ':D'
+        }
+
+    }
+    @Post('parametros-cuerpo')
+    parametrosCuerpo(
+        @Body() parametrosDeCuerpo
+    ){
+        console.log('Paramntros de cuerpo',parametrosDeCuerpo)
+        return 'Registro creado'
+    }
+
 
 }
