@@ -1,7 +1,21 @@
 //@Name() -> decorador
 
 
-import {BadRequestException, Body, Controller, Delete, Get, Header, HttpCode, Param, Post, Query} from "@nestjs/common";
+import {
+    BadRequestException,
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Header,
+    HttpCode,
+    Param,
+    Post,
+    Query, Req, Res,
+
+} from "@nestjs/common";
+import {MascotaCreateDto} from "./dto/mascota.create-dto";
+import {validate, ValidationError} from "class-validator";
 //funciona con el protocolo http
 //servidor definir la URL
 //divifimos el controlador con prefijos
@@ -76,11 +90,68 @@ export class HttpJuegoController {
 
     }
     @Post('parametros-cuerpo')
-    parametrosCuerpo(
+    @HttpCode(201)
+   async  parametrosCuerpo(
         @Body() parametrosDeCuerpo
     ){
-        console.log('Paramntros de cuerpo',parametrosDeCuerpo)
-        return 'Registro creado'
+        const mascotavalida= new MascotaCreateDto();
+        mascotavalida.casada=parametrosDeCuerpo.casada
+        mascotavalida.edad=parametrosDeCuerpo.edad
+        mascotavalida.nombre=parametrosDeCuerpo.nombre
+        mascotavalida.ligada=parametrosDeCuerpo.ligada
+        mascotavalida.peso=parametrosDeCuerpo.peso
+
+        //promesas async uso de validete intancia de clases validadas
+        //colocar un try catch para usar validtae
+        try{
+            const errores: ValidationError[]= await  validate(mascotavalida)
+            if(errores.length > 0){
+                console.error('Error',errores)
+                throw  new BadRequestException('Error validando')
+
+            }else {
+                return {
+                    mensaje: 'Se creo correctamente'
+                };
+            }
+        }catch (e) {
+            console.error('Error',e)
+            throw  new BadRequestException('Error validando')
+        }
+
+       // console.log('Paramntros de cuerpo',parametrosDeCuerpo)
+       // return 'Registro creado'
+    }
+    //galletas
+    //3 URLS
+    //1 guardar una cookie insegura
+    //2 guardar una cookie segur
+    //2mostrar cookies
+    @Get('guardarCookieInsegura')
+    guardarCookieInsegura(
+        @Query() parametrosconsulta,
+        @Req()req,
+        @Res() res
+    ){
+            //usamos el framework expressjs
+        //instalar el cookie-parser
+        //guardamos la cookie
+        //propiedad si es segura o insegura
+        //respuesta no funciona con return
+        //optener peticion y respuesta usa dos decoradores
+        //@Req  peticion
+        //@Res respuesta
+        //galleta recibe el domio el valor
+        res.cookie(
+            'galletaInsegura',//nombre
+            'tengoHambre'  //valor
+        )
+        //no se puede usar return cuando se usa @Res()
+        res.send(
+            {
+                mensaje: 'ok'
+            }
+        )
     }
 
 
