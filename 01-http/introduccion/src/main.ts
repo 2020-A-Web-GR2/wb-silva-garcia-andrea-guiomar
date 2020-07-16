@@ -11,7 +11,7 @@ async function bootstrap() {
    */
 
   //await app.listen(3000);
-  app.use(cookieParse())
+  app.use(cookieParse('Me gustan las Poliburguers'))
   await app.listen(3001);
 }
 bootstrap();

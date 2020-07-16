@@ -152,7 +152,61 @@ export class HttpJuegoController {
                 mensaje: 'ok'
             }
         )
+
     }
 
+    @Get('guardarCookieSegura')
+    guardarCookieSegura(
+        @Query() parametrosconsulta,
+        @Req()req,
+        @Res() res
+    ){
+        //usamos el framework expressjs
+        //instalar el cookie-parser
+        //guardamos la cookie
+        //propiedad si es segura o insegura
+        //respuesta no funciona con return
+        //optener peticion y respuesta usa dos decoradores
+        //@Req  peticion
+        //@Res respuesta
+        //galleta recibe el domio el valor
+        res.cookie(
+            'galletasegura',//nombre
+            'Web',  //valor
+        {
+            secure:true
+        }
+        )
+        //no se puede usar return cuando se usa @Res()
+        res.send(
+            {
+                mensaje: 'ok'
+            }
+        )
+    }
+
+    @Get("mostrarCookies")
+    mostrarCookies(
+        @Req() req
+    ){
+        const mensaje= {
+
+
+            sinFirmar: req.cookies,
+            firmadas: req.signedCookies
+        }
+        return mensaje
+    }
+//cookies firmadas
+    @Get('guadarCookieFirmada')
+    guardarCookieFirmada(
+        @Res() res
+    ){
+        res.cookie('Firmada','poliburguer',{signed:true});
+        const  mensaje={
+            mensaje:'ok'
+        };
+        res.send(mensaje)
+    }
 
 }
