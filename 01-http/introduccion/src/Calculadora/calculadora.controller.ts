@@ -25,7 +25,8 @@ export class calculadoraController {
     async parametrosSuma(
         @Query()
             parametrosSuma,
-        @Req()req
+        @Req()req,
+        @Res() res
     ){
 
         if(req.cookies['user']!=null) {
@@ -37,7 +38,7 @@ export class calculadoraController {
             nums.numerouno = Number(n1)
             nums.numerodos = Number(n2)
 
-            console.log('parametrosDeSuma', parametrosSuma, req.cookies['user'])
+
 
             try {
                 const errores: ValidationError[] = await validate(nums)
@@ -47,17 +48,30 @@ export class calculadoraController {
 
                 } else {
                     const suma = Number(n1) + Number(n2)
-                    return {
-                        mensaje: 'La suma es igual a:  ' + suma
-                    };
+                    const nuevoPuntaje=Number(req.signedCookies['Puntaje']) - Math.abs(suma)
+                   if(nuevoPuntaje <= 0 ){
+                      const  mensaje2= req.cookies['user']+", haz terminado tus puntos, se te han restablecido de nuevo"
+                       res.cookie('Puntaje',100,{signed:true});
+                      const mensaje= 'La suma es igual a:  ' +suma +'\n'+ mensaje2
+                      res.send(mensaje)
+
+                   }else{
+                       res.cookie('Puntaje',nuevoPuntaje,{signed:true});
+                       const mensaje= 'La suma es igual a:  ' + suma
+                       res.send(mensaje)
+                   }
+
+
                 }
             } catch (e) {
                 console.error('Error', e)
                 throw  new BadRequestException('Error validando')
             }
+            console.log('parametrosDeSuma', parametrosSuma, req.cookies['user'],req.signedCookies['Puntaje'])
         }else{
             throw  new BadRequestException('Necesita un usuario para usar la calculadora')
         }
+
 
 
 
@@ -67,7 +81,8 @@ export class calculadoraController {
     async  parametroResta(
         @Body() resta,
         @Query() parametrosResta,
-        @Req()req
+        @Req()req,
+        @Res() res
     ){
         if(req.cookies['user']!=null) {
             const nums = new NumerosCreateDto()
@@ -75,7 +90,7 @@ export class calculadoraController {
             const n1 = resta.numerouno
             nums.numerodos = Number(n2)
             nums.numerouno = Number(n1)
-            console.log('parametrosDeResta', parametrosResta)
+
             try {
                 const errores: ValidationError[] = await validate(nums)
                 if (errores.length > 0) {
@@ -84,14 +99,24 @@ export class calculadoraController {
 
                 } else {
                     const restar = Number(n1) - Number(n2)
-                    return {
-                        mensaje: 'La resta es igual a ' + restar
-                    };
+                    const nuevoPuntaje=Number(req.signedCookies['Puntaje']) - Math.abs(restar)
+                    if(nuevoPuntaje <= 0 ){
+                        const  mensaje2= req.cookies['user']+", haz terminado tus puntos, se te han restablecido de nuevo"
+                        res.cookie('Puntaje',100,{signed:true});
+                        const mensaje= 'La resta es igual a:  ' +restar +'\n'+ mensaje2
+                        res.send(mensaje)
+
+                    }else{
+                        res.cookie('Puntaje',nuevoPuntaje,{signed:true});
+                        const mensaje= 'La resta es igual a:  ' + restar
+                        res.send(mensaje)
+                    }
                 }
             } catch (e) {
                 console.error('Error', e)
                 throw  new BadRequestException('Error validando')
             }
+            console.log('parametrosDeResta', parametrosResta, req.signedCookies['Puntaje'])
         }else{
             throw  new BadRequestException('Necesita un usuario para usar la calculadora')
         }
@@ -105,7 +130,8 @@ export class calculadoraController {
     async  parametroMultiplica(
         @Body() multiplicar,
         @Req() req,
-        @Headers() headers
+        @Headers() headers,
+        @Res() res
     ){
         if(req.cookies['user']!=null) {
             const nums = new NumerosCreateDto()
@@ -114,7 +140,7 @@ export class calculadoraController {
             nums.numerodos = Number(n2)
             nums.numerouno = Number(n1)
 
-            console.log('parametrosDeResta', multiplicar, headers)
+
             try {
                 const errores: ValidationError[] = await validate(nums)
                 if (errores.length > 0) {
@@ -123,14 +149,24 @@ export class calculadoraController {
 
                 } else {
                     const multi = Number(n1) * Number(n2)
-                    return {
-                        mensaje: 'La multiplicacion es igual a ' + multi
-                    };
+                    const nuevoPuntaje=Number(req.signedCookies['Puntaje']) - Math.abs(multi)
+                    if(nuevoPuntaje <= 0 ){
+                        const  mensaje2= req.cookies['user']+", haz terminado tus puntos, se te han restablecido de nuevo"
+                        res.cookie('Puntaje',100,{signed:true});
+                        const mensaje= 'La suma es igual a:  ' +multi +'\n'+ mensaje2
+                        res.send(mensaje)
+
+                    }else{
+                        res.cookie('Puntaje',nuevoPuntaje,{signed:true});
+                        const mensaje= 'La suma es igual a:  ' + multi
+                        res.send(mensaje)
+                    }
                 }
             } catch (e) {
                 console.error('Error', e)
                 throw  new BadRequestException('Error validando')
             }
+            console.log('parametrosDeMultiplicacion', multiplicar, req.signedCookies['Puntaje'])
         }else{
             throw  new BadRequestException('Necesita un usuario para usar la calculadora')
         }
@@ -145,7 +181,8 @@ export class calculadoraController {
     async  parametroDivide(
         @Param() divide,
         @Req() req,
-        @Headers() headers
+        @Headers() headers,
+        @Res() res
     ){
         if(req.cookies['user']!=null) {
 
@@ -165,15 +202,24 @@ export class calculadoraController {
 
                 } else {
                     const dividir = Number(n1) / Number(n2)
-                    return {
-                        mensaje: 'La División es igual a ' + dividir
-                    };
+                    const nuevoPuntaje=Number(req.signedCookies['Puntaje']) - Math.abs(dividir)
+                    if(nuevoPuntaje <= 0 ){
+                        const  mensaje2= req.cookies['user']+", haz terminado tus puntos, se te han restablecido de nuevo"
+                        res.cookie('Puntaje',100,{signed:true});
+                        const mensaje= 'La suma es igual a:  ' +dividir +'\n'+ mensaje2
+                        res.send(mensaje)
+
+                    }else{
+                        res.cookie('Puntaje',nuevoPuntaje,{signed:true});
+                        const mensaje= 'La suma es igual a:  ' + dividir
+                        res.send(mensaje)
+                    }
                 }
             } catch (e) {
                 console.error('Error', e)
                 throw  new BadRequestException('Error validando')
             }
-            console.log('parametrosDivide', headers, n1, n2)
+            console.log('parametrosDivide', n1, n2, req.signedCookies['Puntaje'])
 
         }else{
             throw  new BadRequestException('Necesita un usuario para usar la calculadora')
@@ -191,16 +237,32 @@ export class calculadoraController {
            'user' ,//nombre
             paramatro.nombre //valor
         )
+        res.cookie('Puntaje',100,{signed:true});
         res.send(
             {
                 mensaje: 'CALCULADORA ANDRE :D...'
             }
         )
     }
-    obtenerCookie(){
+    // COOKIE FIRMADA PUNTAJE!!!!!
 
+  /*  @Get('puntaje')
+    guardarCookieFirmada(
+        @Res() res,
+        @Req() req
+    ){
+        res.cookie('Puntaje',100,{signed:true});
+        const  mensaje={
+            mensaje:'ok'
+        };
+        res.send(mensaje)
+     //   const  mensaje={
+      //      mensaje:req.cookies['user']+", haz terminado tus puntos, se te han restablecido de nuevo"
+       // };
+       // if()
+       // res.send(mensaje)
     }
-
+*/
 
 
 }

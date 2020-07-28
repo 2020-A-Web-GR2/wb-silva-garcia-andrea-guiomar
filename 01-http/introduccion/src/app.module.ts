@@ -5,6 +5,7 @@ import {HttpJuegoModule} from "./http/http.module";
 import {CalculadoraModule} from "./Calculadora/calculadora.module";
 import {UsuarioModule} from "./usuario/usuario.module";
 import {TypeOrmModule} from "@nestjs/typeorm";
+import {UsuarioEntity} from "./usuario/usuario.entity";
 
 @Module({
   imports: [
@@ -17,10 +18,10 @@ import {TypeOrmModule} from "@nestjs/typeorm";
           host: 'localhost',//ip
           port: 3306,//puerto
           username: 'root', //usuario
-          password: 'root',//password
+          password: 'root123',//password
           database: 'test',//base de datos
           entities: [
-
+            UsuarioEntity
           ], //todas las entidades
           synchronize: true, //actualiza el esquema de la BD
           dropSchema: false, //eliminar los datos y el esquema de BD
