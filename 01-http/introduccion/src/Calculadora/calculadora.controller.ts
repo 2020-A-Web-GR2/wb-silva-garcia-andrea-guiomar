@@ -153,12 +153,12 @@ export class calculadoraController {
                     if(nuevoPuntaje <= 0 ){
                         const  mensaje2= req.cookies['user']+", haz terminado tus puntos, se te han restablecido de nuevo"
                         res.cookie('Puntaje',100,{signed:true});
-                        const mensaje= 'La suma es igual a:  ' +multi +'\n'+ mensaje2
+                        const mensaje= 'La multiplicación es igual a:  ' +multi +'\n'+ mensaje2
                         res.send(mensaje)
 
                     }else{
                         res.cookie('Puntaje',nuevoPuntaje,{signed:true});
-                        const mensaje= 'La suma es igual a:  ' + multi
+                        const mensaje= 'La multiplicación es igual a:  ' + multi
                         res.send(mensaje)
                     }
                 }
@@ -206,12 +206,12 @@ export class calculadoraController {
                     if(nuevoPuntaje <= 0 ){
                         const  mensaje2= req.cookies['user']+", haz terminado tus puntos, se te han restablecido de nuevo"
                         res.cookie('Puntaje',100,{signed:true});
-                        const mensaje= 'La suma es igual a:  ' +dividir +'\n'+ mensaje2
+                        const mensaje= 'La divisón es igual a:  ' +dividir +'\n'+ mensaje2
                         res.send(mensaje)
 
                     }else{
                         res.cookie('Puntaje',nuevoPuntaje,{signed:true});
-                        const mensaje= 'La suma es igual a:  ' + dividir
+                        const mensaje= 'La división es igual a:  ' + dividir
                         res.send(mensaje)
                     }
                 }
