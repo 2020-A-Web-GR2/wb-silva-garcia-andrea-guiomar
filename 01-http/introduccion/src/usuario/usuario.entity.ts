@@ -1,20 +1,22 @@
-import {Column, Entity, Index, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, Index, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import {MascotaEntity} from "../mascota/mascota.entity";
 
 //en que columnas queremos indice
 @Index(
-    [
-        'nombre',
+  [
+    'nombre',
         'apellido',
-        'cedula',
-        'fechaNacimiento' //nombres de preopiedades en la clase
+       'cedula',
+       'fechaNacimiento' //nombres de preopiedades en la clase
     ]
 )
 
 //indice compuesto
-@Index(
-    ['nombre','apellido','cedula'],
-    {unique:true}
-)
+
+//@Index(
+   // ['nombre','apellido','cedula'],
+  //  {unique:true}
+//)
 @Entity('epn_usuario')//tabla
 export class UsuarioEntity {
     @PrimaryGeneratedColumn(
@@ -66,4 +68,12 @@ export class UsuarioEntity {
 
     })
     fechaNacimiento?:string
+
+
+    @OneToMany(
+        type=>MascotaEntity, //QUE ENTIDAD
+        mascota=>mascota.usuario  //coampo que se relaciona
+    )
+    //relacion en plurarl
+    mascotas: MascotaEntity[]
 }
