@@ -235,12 +235,34 @@ constructor(
     ){
     const nombreControlador='Andrea';
     res.render(
-        'ejemplo',//nombre de la vista (archivo)
+        'usuario/ejemplo',//nombre de la vista (archivo)
         {
             //parametros de la vista
             nombre: nombreControlador,
         }
     )
+    }
+
+
+    @Get('vista/faq')
+    faq(
+        @Res() res
+    ) {
+        res.render('usuario/faq')
+    }
+
+    @Get('vista/inicio')
+    inicio(
+        @Res() res
+    ) {
+        res.render('usuario/inicio')
+    }
+
+    @Get('vista/login')
+    login(
+        @Res() res
+    ) {
+        res.render('usuario/login')
     }
 
 }
