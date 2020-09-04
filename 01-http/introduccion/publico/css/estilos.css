@@ -1,4 +1,7 @@
 body{
     font-family: Arial;
-    color:darkred;
+    color:black;
+}
+td,th{
+    border: 1px solid #dddddd;
 }
