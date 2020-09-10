@@ -7,11 +7,12 @@ import {
     InternalServerErrorException, NotFoundException,
     Param,
     Post,
-    Put, Res
+    Put, Query, Res
 } from "@nestjs/common";
 import {UsuarioService} from "./usuario.service";
 import {MascotaService} from "../mascota/mascota.service";
 import e from "express";
+import {UsuarioEntity} from "./usuario.entity";
 
 @Controller('usuario')
 export class UsuarioController {
@@ -235,12 +236,181 @@ constructor(
     ){
     const nombreControlador='Andrea';
     res.render(
-        'ejemplo',//nombre de la vista (archivo)
+        'usuario/ejemplo',//nombre de la vista (archivo)
         {
             //parametros de la vista
             nombre: nombreControlador,
         }
     )
+    }
+
+
+    @Get('vista/faq')
+    faq(
+        @Res() res
+    ) {
+        res.render('usuario/faq')
+    }
+
+    @Get('vista/inicio')
+    async inicio(
+        @Res() res,
+        @Query()paramtrosconsulta
+    ) {
+        let resultadoEncontrado
+        try {
+            resultadoEncontrado = await this._usuarioService.buscarTodos();
+        } catch (error) {
+            throw new InternalServerErrorException('Error encontrando usuarios')
+        }
+        if (resultadoEncontrado) {
+            res.render(
+                'usuario/inicio',
+                {
+                    arregloUsuarios: resultadoEncontrado,
+                    parametrosConsulta:paramtrosconsulta
+                });
+        } else {
+            throw new NotFoundException('No se encontraron usuarios')
+        }
+
+
+    }
+
+    @Get('vista/login')
+    login(
+        @Res() res
+    ) {
+        res.render('usuario/login')
+    }
+
+    @Get('vista/crear')
+    crearUusuarioVista(
+        @Query() parametrosConsulta,
+        @Res() res
+
+    ) {
+        return res.render(
+            'usuario/crear',
+            {
+                error: parametrosConsulta.error,
+                nombre: parametrosConsulta.nombre,
+                apellido: parametrosConsulta.apellido,
+                cedula: parametrosConsulta.cedula
+            }
+        )
+    }
+    @Post('crearDeseVista')
+    async crearDesdeVista(
+        @Body() paramnetrosCuerpo,
+        @Res() res
+    ) {
+        //validar datos con el dto
+        let nombreApellidoConsulta
+        let cedulaconsulta
+        if(paramnetrosCuerpo.cedula && paramnetrosCuerpo.nombre && paramnetrosCuerpo.apellido){
+            nombreApellidoConsulta=`&nombre=${paramnetrosCuerpo.nombre}&apellido=${paramnetrosCuerpo.apellido}`
+            if(paramnetrosCuerpo.cedula.length ==10){
+               cedulaconsulta=`cedula=${paramnetrosCuerpo.cedula}`
+            }else{
+                const mensajeError='CEDULA INCORRECTA'
+               return  res.redirect('/usuario/vista/crear?error='+ mensajeError+nombreApellidoConsulta)
+               // throw new BadRequestException('ENVIAR CEDULA(10) NOMBRE Y APELLIDO')
+
+            }
+        }else{
+            const mensajeError='ENVIAR CEDULA(10) NOMBRE Y APELLIDO'
+           return res.redirect('/usuario/vista/crear?error='+ mensajeError)
+
+            //throw new BadRequestException('ENVIAR CEDULA(10) NOMBRE Y APELLIDO')
+        }
+//------------------------------------------
+        let  respuestaCreacionUusario
+        try{
+            respuestaCreacionUusario = await this._usuarioService.crearUno(paramnetrosCuerpo)
+
+        }catch (error) {
+            console.error(error)
+            const mensajeError='ERROR AL CREAR USUARIO'
+            return res.redirect('/usuario/vista/crear?error='+ mensajeError + nombreApellidoConsulta )
+           // throw  new InternalServerErrorException('Error creando usuario')
+        }
+        if (respuestaCreacionUusario){
+            console.log('paramntrosCuerpo', paramnetrosCuerpo)
+          return   res.redirect('/usuario/vista/inicio')
+            //return 'usuario creado'
+
+        }else{
+            const mensajeError='ERROR AL CREAR USUARIO'
+            return res.redirect('/usuario/vista/crear?error='+ mensajeError)
+            //throw  new InternalServerErrorException('error creando usuario')
+        }
+
+
+    }
+    @Post('eliminarDesdeVista/:id')
+    async eliminarDesdeVista(
+        @Param() parametrosRuta,
+        @Res()res
+    ) {
+        try {
+            const id = Number(parametrosRuta.id);
+            await this._usuarioService.eliminarUno(id)
+            return res.redirect('/usuario/vista/inicio?mensaje=Usuario eliminado')
+        } catch (error) {
+            console.log(error);
+            return res.redirect('/usuario/vista/inicio?error=Error eliminando usuario')
+        }
+
+    }
+
+    @Get('vista/editar/:id')
+    async editarUusuarioVista(
+        @Query() parametrosConsulta,
+        @Param() parametrosRuta,
+        @Res() res
+    ) {
+        const id = Number(parametrosRuta.id)
+        let usuarioEncontrado;
+        try {
+            usuarioEncontrado = await this._usuarioService.buscarUno(id)
+        } catch (error) {
+            console.error('Error del servidor')
+            return res.redirect('/usuario/vista/inicio?=Error buscando usuario')
+
+        }
+        if(usuarioEncontrado){
+            return res.render(
+                'usuario/crear',
+                {
+                    error: parametrosConsulta.error,
+                    usuario: usuarioEncontrado
+                }
+            )
+        }else{
+            return  res.redirect('/usuario/vista/inicio?mensaje=Uusuario no encontrado')
+        }
+
+    }
+    @Post('editarDeseVista/:id')
+    async editarDesdeVista(
+        @Param()parametrosRuta,
+        @Body()parametroscuerpo,
+        @Res() res
+    ) {
+
+        const usuarioEditado = {
+            id: Number(parametrosRuta.id),
+            nombre: parametroscuerpo.nombre,
+            apellido: parametroscuerpo.apellido,
+            //cedula: parametroscuerpo.cedula
+        }as UsuarioEntity
+        try {
+            await this._usuarioService.editarUno(usuarioEditado);
+        } catch (error) {
+            console.error(error)
+            return res.redirect('/usuaurio/vista/inicio?mensaje=Error editando usuario');
+        }
     }
 
 }
