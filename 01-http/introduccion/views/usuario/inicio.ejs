@@ -5,44 +5,45 @@
 
 <!- tablas dentro de html -->
 <!- '=' se utiliza con  -->
-<p><%= "HOLA"%></p>
+<p><%= "Hola" %></p>
 <p><%= 15 %></p>
-<!-- "<%%>"   -->
-<%const andrea= {nombre:"Andrea",apellido:"Silva",cedula:"17"}%>
-<% const  numero=25%>
-<% const  mensaje=""%>
-<p><%=andrea.nombre%></p>
-<p><%=numero%></p>
-<p><%=mensaje%></p>
-<%const arregloNumeros=[1,2,3,4,5]%>
-
+<!-- "< % % >"-->
+<% const adrian = {nombre: "Adrian", apellido: "Eguez", cedula: "17"} %>
+<% const numero = 25 %>
+<% const mensaje = "Hola" %>
+<p><%= adrian.nombre %> <%= adrian.apellido %></p>
+<p><%= numero %></p>
+<p><%= mensaje %></p>
+<% const arregloNumeros = [1, 2, 3, 4, 5] %>
 <ul>
-    <%arregloNumeros.forEach((objecto)=>{%>
-    <li>
-        <%=objecto%>
-    </li>
-    <%})%>
+    <% arregloNumeros.forEach( (objeto)=>{ %>
+        <li><%= objeto %></li>
+    <% } ) %>
 </ul>
+
 <a href="/usuario/vista/crear">
-<button> CREAR</button>
+    <button>Crear</button>
 </a>
-<%if(typeof parametrosConsulta !='undefined'){%>
-<p>MENSAJE: <%= parametrosConsulta.mensaje%></p>
+<%if(typeof parametrosConsulta != 'undefined') {%>
+    <p>MENSAJE: <%= parametrosConsulta.mensaje%></p>
 <%}%>
 
+<form action="/usuario/vista/inicio"
+      method="GET">
+    <label for="busqueda">Busqueda:</label>
+    <input id="busqueda" type="text" name="busqueda">
+    <button type="submit"> Buscar</button>
+</form>
+
+
 <table>
-    <!- table row-->
+    <!--table row-->
     <tr>
-        <th>
-            NOMBRE
-        </th>
-        <th>
-            APELLIDO
-        </th>
-        <th> CEDULA</th>
-        <th>
-            ACCIONES
-        </th>
+        <!--table header-->
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Cedula</th>
+        <th>Acciones</th>
     </tr>
     <% arregloUsuarios.forEach( (objeto)=>{ %>
         <tr>
@@ -51,17 +52,20 @@
             <td><%= objeto.cedula %></td>
             <td>
                 <button>Ver</button>
-                <a href="/usuario/vista/editar/<%= objeto.id%>">
-                <button>Editar</button>
+                <a href="/usuario/vista/editar/<%= objeto.id %>">
+                    <button>Editar</button>
                 </a>
-                <form action="/usuario/eliminarDesdeVista/<%=objeto.id%>"
-                method="POST">
+                <!--                 GET /usuario/vista/editar/:id-->
+                <form action="/usuario/eliminarDesdeVista/<%= objeto.id %>"
+                      method="POST"
+                >
+                    <!--                    POST /usuario/eliminarDesdeVista/:id -->
                     <button type="submit">Eliminar</button>
                 </form>
-
             </td>
         </tr>
-    <%})%>
+    <% } ) %>
+
 </table>
 
 
