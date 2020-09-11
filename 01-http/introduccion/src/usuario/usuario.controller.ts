@@ -259,7 +259,7 @@ constructor(
     ) {
         let resultadoEncontrado
         try {
-            resultadoEncontrado = await this._usuarioService.buscarTodos();
+            resultadoEncontrado = await this._usuarioService.buscarTodos(paramtrosconsulta.busqueda);
         } catch (error) {
             throw new InternalServerErrorException('Error encontrando usuarios')
         }
@@ -300,72 +300,8 @@ constructor(
             }
         )
     }
-    @Post('crearDeseVista')
-    async crearDesdeVista(
-        @Body() paramnetrosCuerpo,
-        @Res() res
-    ) {
-        //validar datos con el dto
-        let nombreApellidoConsulta
-        let cedulaconsulta
-        if(paramnetrosCuerpo.cedula && paramnetrosCuerpo.nombre && paramnetrosCuerpo.apellido){
-            nombreApellidoConsulta=`&nombre=${paramnetrosCuerpo.nombre}&apellido=${paramnetrosCuerpo.apellido}`
-            if(paramnetrosCuerpo.cedula.length ==10){
-               cedulaconsulta=`cedula=${paramnetrosCuerpo.cedula}`
-            }else{
-                const mensajeError='CEDULA INCORRECTA'
-               return  res.redirect('/usuario/vista/crear?error='+ mensajeError+nombreApellidoConsulta)
-               // throw new BadRequestException('ENVIAR CEDULA(10) NOMBRE Y APELLIDO')
-
-            }
-        }else{
-            const mensajeError='ENVIAR CEDULA(10) NOMBRE Y APELLIDO'
-           return res.redirect('/usuario/vista/crear?error='+ mensajeError)
-
-            //throw new BadRequestException('ENVIAR CEDULA(10) NOMBRE Y APELLIDO')
-        }
-//------------------------------------------
-        let  respuestaCreacionUusario
-        try{
-            respuestaCreacionUusario = await this._usuarioService.crearUno(paramnetrosCuerpo)
-
-        }catch (error) {
-            console.error(error)
-            const mensajeError='ERROR AL CREAR USUARIO'
-            return res.redirect('/usuario/vista/crear?error='+ mensajeError + nombreApellidoConsulta )
-           // throw  new InternalServerErrorException('Error creando usuario')
-        }
-        if (respuestaCreacionUusario){
-            console.log('paramntrosCuerpo', paramnetrosCuerpo)
-          return   res.redirect('/usuario/vista/inicio')
-            //return 'usuario creado'
-
-        }else{
-            const mensajeError='ERROR AL CREAR USUARIO'
-            return res.redirect('/usuario/vista/crear?error='+ mensajeError)
-            //throw  new InternalServerErrorException('error creando usuario')
-        }
-
-
-    }
-    @Post('eliminarDesdeVista/:id')
-    async eliminarDesdeVista(
-        @Param() parametrosRuta,
-        @Res()res
-    ) {
-        try {
-            const id = Number(parametrosRuta.id);
-            await this._usuarioService.eliminarUno(id)
-            return res.redirect('/usuario/vista/inicio?mensaje=Usuario eliminado')
-        } catch (error) {
-            console.log(error);
-            return res.redirect('/usuario/vista/inicio?error=Error eliminando usuario')
-        }
-
-    }
-
-    @Get('vista/editar/:id')
-    async editarUusuarioVista(
+    @Get('vista/editar/:id') // Controlador
+    async editarUsuarioVista(
         @Query() parametrosConsulta,
         @Param() parametrosRuta,
         @Res() res
@@ -373,13 +309,12 @@ constructor(
         const id = Number(parametrosRuta.id)
         let usuarioEncontrado;
         try {
-            usuarioEncontrado = await this._usuarioService.buscarUno(id)
+            usuarioEncontrado = await this._usuarioService.buscarUno(id);
         } catch (error) {
-            console.error('Error del servidor')
-            return res.redirect('/usuario/vista/inicio?=Error buscando usuario')
-
+            console.error('Error del servidor');
+            return res.redirect('/usuario/vista/inicio?mensaje=Error buscando usuario');
         }
-        if(usuarioEncontrado){
+        if (usuarioEncontrado) {
             return res.render(
                 'usuario/crear',
                 {
@@ -387,29 +322,83 @@ constructor(
                     usuario: usuarioEncontrado
                 }
             )
-        }else{
-            return  res.redirect('/usuario/vista/inicio?mensaje=Uusuario no encontrado')
+        } else {
+            return res.redirect('/usuario/vista/inicio?mensaje=Usuario no encontrado');
         }
 
     }
-    @Post('editarDeseVista/:id')
-    async editarDesdeVista(
-        @Param()parametrosRuta,
-        @Body()parametroscuerpo,
-        @Res() res
-    ) {
 
+    @Post('crearDesdeVista')
+    async crearDesdeVista(
+        @Body() parametrosCuerpo,
+        @Res() res,
+    ) {
+        // Validar los datos con un rico DTO
+        let nombreApellidoConsulta;
+        let cedulaConsulta;
+        if (parametrosCuerpo.cedula && parametrosCuerpo.nombre && parametrosCuerpo.apellido) {
+            nombreApellidoConsulta = `&nombre=${parametrosCuerpo.nombre}&apellido=${parametrosCuerpo.apellido}`
+            if (parametrosCuerpo.cedula.length === 10) {
+                cedulaConsulta = `&cedula=${parametrosCuerpo.cedula}`
+            } else {
+                const mensajeError = 'Cedula incorrecta'
+                return res.redirect('/usuario/vista/crear?error=' + mensajeError + nombreApellidoConsulta)
+            }
+        } else {
+            const mensajeError = 'Enviar cedula(10) nombre y apellido'
+            return res.redirect('/usuario/vista/crear?error=' + mensajeError)
+        }
+        let respuestaCreacionUsuario;
+        try {
+            respuestaCreacionUsuario = await this._usuarioService.crearUno(parametrosCuerpo);
+        } catch (error) {
+            console.error(error);
+            const mensajeError = 'Error creando usuario'
+            return res.redirect('/usuario/vista/crear?error=' + mensajeError + nombreApellidoConsulta + cedulaConsulta)
+        }
+        if (respuestaCreacionUsuario) {
+            return res.redirect('/usuario/vista/inicio');
+        } else {
+            const mensajeError = 'Error creando usuario'
+            return res.redirect('/usuario/vista/crear?error=' + mensajeError + nombreApellidoConsulta + cedulaConsulta);
+        }
+    }
+
+    @Post('editarDesdeVista/:id')
+    async editarDesdeVista(
+        @Param() parametrosRuta,
+        @Body() parametrosCuerpo,
+        @Res() res,
+    ) {
         const usuarioEditado = {
             id: Number(parametrosRuta.id),
-            nombre: parametroscuerpo.nombre,
-            apellido: parametroscuerpo.apellido,
-            //cedula: parametroscuerpo.cedula
-        }as UsuarioEntity
+            nombre: parametrosCuerpo.nombre,
+            apellido: parametrosCuerpo.apellido,
+            // cedula: parametrosCuerpo.cedula,
+        } as UsuarioEntity;
         try {
             await this._usuarioService.editarUno(usuarioEditado);
+            return res.redirect('/usuario/vista/inicio?mensaje=Usuario editado');
+        }catch (error) {
+            console.error(error);
+            return res.redirect('/usuario/vista/inicio?mensaje=Error editando usuario');
+        }
+
+    }
+
+
+    @Post('eliminarDesdeVista/:id')
+    async eliminarDesdeVista(
+        @Param() parametrosRuta,
+        @Res() res
+    ) {
+        try {
+            const id = Number(parametrosRuta.id);
+            await this._usuarioService.eliminarUno(id);
+            return res.redirect('/usuario/vista/inicio?mensaje=Usuario eliminado');
         } catch (error) {
-            console.error(error)
-            return res.redirect('/usuaurio/vista/inicio?mensaje=Error editando usuario');
+            console.log(error);
+            return res.redirect('/usuario/vista/inicio?error=Error eliminando usuario');
         }
     }
 
