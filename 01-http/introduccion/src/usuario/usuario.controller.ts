@@ -333,7 +333,7 @@ constructor(
         @Body() parametrosCuerpo,
         @Res() res,
     ) {
-        // Validar los datos con un rico DTO
+        // Validar los datos con un DTO
         let nombreApellidoConsulta;
         let cedulaConsulta;
         if (parametrosCuerpo.cedula && parametrosCuerpo.nombre && parametrosCuerpo.apellido) {

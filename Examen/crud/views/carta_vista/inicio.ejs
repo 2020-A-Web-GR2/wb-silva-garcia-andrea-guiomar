@@ -1,0 +1,60 @@
+
+<link rel="stylesheet" href="/css/inicio.css">
+<link rel="stylesheet" href="/css/tabla.css">
+
+<h1>Página principal</h1>
+<body>
+<div id="menu">
+<ul>
+    <li>
+        <a href="/carta/vista/inicio">Inicio</a>
+    </li>
+    <li>
+        <a href="/carta/vista/crear">Crear carta</a>
+    </li>
+    <li>
+        <a href="/carta/vista/logout">Logout</a>
+    </li>
+</ul>
+</div>
+
+<table>
+    <!--table row-->
+    <tr>
+        <!--table header-->
+        <th>Nombre del mostruo</th>
+        <th>Tipo de monstruo</th>
+        <th>Efecto</th>
+        <th>Atributo</th>
+        <th>Rango</th>
+        <th>Ataque-Defenza</th>
+        <th>Acciones</th>
+    </tr>
+    <% arregloCartas.forEach( (objeto)=>{ %>
+        <tr>
+            <td><%= objeto.nombre_mostruo %></td>
+            <td><%= objeto.tipo_monstruo%></td>
+            <td><%= objeto.efecto%></td>
+            <td><%= objeto.atributo%></td>
+            <td><%= objeto.rango%></td>
+            <td><%= objeto.ataque_defencsa%></td>
+            <td>
+
+
+                <a href="/carta/vista/editar/<%= objeto.id %>">
+                    <button>Editar</button>
+                </a>
+
+                <form action="/carta/eliminarDesdeVista/<%= objeto.id %>"
+                      method="POST"
+                >
+                    <!--                    POST /usuario/eliminarDesdeVista/:id -->
+                    <button type="submit">Eliminar</button>
+                </form>
+
+            </td>
+        </tr>
+    <% } ) %>
+
+</table>
+</body>
