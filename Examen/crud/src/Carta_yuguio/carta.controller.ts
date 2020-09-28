@@ -322,7 +322,7 @@ export class CartaController {
 
         const usuario = parametrosConsulta.usuario
         const password = parametrosConsulta.password
-        if (usuario == 'Adrian' && password == '1234') {
+        if (usuario == 'Adre' && password == '1234') {
             session.usuario = usuario
              return response.redirect('/carta/vista/inicio')
         } else {
