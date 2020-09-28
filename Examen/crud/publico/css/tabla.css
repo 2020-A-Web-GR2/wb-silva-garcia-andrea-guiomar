@@ -1,0 +1,56 @@
+body{
+    background-color: #632432;
+    font-family: "Century Gothic";
+    font-size: 20px;
+}
+
+#main-container{
+    margin: 150px auto;
+    width: 600px;
+}
+
+table{
+    background-color: darkgray;
+    text-align: left;
+    border-collapse: collapse;
+    width: 100%;
+
+}
+
+th, td{
+    padding: 30px;
+    font-size: 20px;
+}
+
+thead{
+    background-color: #246355;
+    border-bottom: solid 5px #0F362D;
+    color: lightseagreen;
+}
+
+tr:nth-child(even){
+    background-color: whitesmoke;
+}
+
+tr:hover td{
+    background-color: #632432;
+    color: white;
+}
+button{
+    text-decoration: none;
+    padding: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-family: helvetica;
+    font-weight: 300;
+    font-size: 25px;
+    font-family: "Century Gothic";
+    color: white;
+    background-color: cornflowerblue;
+    border-radius: 20px;
+    border: 3px double black;
+}
+button:hover{
+    opacity: 0.6;
+    text-decoration: none;
+}

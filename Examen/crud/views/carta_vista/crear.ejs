@@ -1,0 +1,83 @@
+<link rel="stylesheet" href="/css/formulario.css">
+<section class="carta">
+<% const existecarta = typeof carta != 'undefined'%>
+
+<% let existeNombreMonstruo = typeof nombre_mostruo !== 'undefined' %>
+<% let existeTipoMonstruo = typeof tipo_monstruo!== 'undefined' %>
+<% let existeEfecto= typeof efecto !== 'undefined' %>
+<% let existeAtributo= typeof atributo !== 'undefined' %>
+<% let existeRango = typeof rango !== 'undefined' %>
+<% let existeAtaqueDefensa= typeof ataque_defencsa !== 'undefined' %>
+
+
+<h1> <%= existecarta ? 'Editar' : 'Crear'%> carta</h1>
+<!-- Setear el nombre y apellido-->
+<%if(existecarta){%>
+    <% existeNombreMonstruo = true %>
+    <% existeTipoMonstruo = true %>
+    <% existeEfecto = true %>
+    <% existeAtributo = true %>
+    <% existeRango = true %>
+    <% existeAtaqueDefensa = true %>
+    <% nombre_mostruo = carta.nombre_mostruo %>
+    <% tipo_monstruo = carta.tipo_monstruo %>
+    <% efecto = carta.efecto %>
+    <% atributo = carta.atributo %>
+    <% rango = carta.rango %>
+    <% ataque_defencsa = carta.ataque_defencsa %>
+<%}%>
+
+
+<% if(typeof error !== 'undefined') { %>
+    <p>MENSAJE ERROR: <%= error %></p>
+<% } %>
+
+<form action="<%= existecarta ? '/carta/editarDesdeVista/' + carta.id : '/carta/crearDesdeVista' %>"
+      method="POST">
+
+    <label for="nombreID">Nombre del Monstruo:</label>
+    <input  class="controls" id="nombreID" type="text"  <% if(existeNombreMonstruo){%>
+           disabled
+            <%}%>
+           name="nombre_mostruo" value="<%= existeNombreMonstruo ? nombre_mostruo : '' %>">
+    <br>
+
+    <label for="tipoMonstruoID">Tipo de mostruo:</label>
+    <input  class="controls" id="tipoMonstruoID" type="text"  <% if(existeTipoMonstruo){%>
+           disabled
+            <%}%>
+           name=tipo_monstruo value="<%= existeTipoMonstruo ? tipo_monstruo : '' %>">
+    <br>
+
+    <label for="efectoID">Efecto:</label>
+    <input   class="controls" id="efectoID" type="text"
+
+           name="efecto"
+           value="<%= existeEfecto ? efecto : '' %>">
+    <br>
+    <label for="atributoID">Atributo:</label>
+    <input  class="controls" id="atributoID" type="text"
+    <% if(existeAtributo){%>
+           disabled
+            <%}%>
+
+           name="atributo"
+           value="<%= existeAtributo ? atributo : '' %>">
+    <br>
+    <label for="rangoID">Rango:</label>
+    <input class="controls" id="rangoID" type="text"
+
+           name="rango"
+           value="<%= existeRango ? rango : '' %>">
+    <br>
+    <label for="ataqueDefensaID">Ataque-Defensa:</label>
+    <input  class="controls" id="ataqueDefensaID" type="text"
+
+           name="ataque_defencsa"
+           value="<%= existeAtaqueDefensa ? ataque_defencsa : '' %>">
+    <br>
+    <button class="botons" type="submit">Enviar</button>
+
+
+</form>
+</section>
