@@ -1,0 +1,40 @@
+<link rel="stylesheet" href="/css/tabla.css">
+<%- include('../compartido/menu/menuCliente')%>
+<body>
+<h1>OFERTA DE VIAJES!!!!</h1>
+
+<% const ofertas = {codigo: "SN 2585", origen: "Quito", destino: "Bogotá"}%>
+
+<section class="clientes">
+<form action="/vuelo/vista/destinos" method="get">
+    <label for="destinoID">Destino:</label>
+    <input  class="controls2" id="destinoID" type="text" name="destino">
+    <br>
+    <button class="botons" type="submit">BUSCAR</button>
+</form>
+</section>
+
+<table>
+    <tr>
+
+        <th>Origen</th>
+        <th>Destino</th>
+        <th>Acciones</th>
+    </tr>
+
+    <% arregloViaje.forEach((objeto)=>{ %>
+        <tr>
+            <td><%= objeto.lugar_origen%></td>
+            <td><%= objeto.lugar_destino%></td>
+            <td>
+                <a href="datosViaje/<%= objeto.id_Vuelo%>"  >
+                    <button>Seleccionar</button>
+                </a>
+            </td>
+        </tr>
+    <% } ) %>
+
+</table>
+
+</body>
+

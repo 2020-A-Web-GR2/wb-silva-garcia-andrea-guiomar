@@ -162,7 +162,7 @@ export class CartaController {
             }
 
         } else {
-            return res.redirect('/carta/login')
+            return res.redirect('/carta/vista/login')
         }
 
 
@@ -322,7 +322,7 @@ export class CartaController {
 
         const usuario = parametrosConsulta.usuario
         const password = parametrosConsulta.password
-        if (usuario == 'Adrian' && password == '1234') {
+        if (usuario == 'Andre' && password == '1234') {
             session.usuario = usuario
              return response.redirect('/carta/vista/inicio')
         } else {
@@ -338,5 +338,31 @@ export class CartaController {
         session.username=undefined
         req.session.destroy();
         return res.redirect('/carta/vista/login')
+    }
+    @Get('vista/buscar')
+    async buscarr(
+        @Res() res,
+        @Query()paramtrosconsulta,
+        @Session() session
+    ) {
+        let resultadoEncontrado
+        try {
+            resultadoEncontrado = await this._cartaService.buscarCarta(paramtrosconsulta.busqueda);
+        } catch (error) {
+            throw new InternalServerErrorException('Error encontrando usuarios')
+        }
+        if (resultadoEncontrado) {
+            res.render(
+                'carta_vista/inicio',
+                {
+                    usuario: session.usuario
+                    ,arregloCartas: resultadoEncontrado,
+                    parametrosConsulta: paramtrosconsulta
+                });
+        } else {
+            throw new NotFoundException('No se encontraron usuarios')
+        }
+
+
     }
 }

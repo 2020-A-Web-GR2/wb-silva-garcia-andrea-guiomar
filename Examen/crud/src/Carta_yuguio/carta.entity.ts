@@ -30,6 +30,7 @@ export class CartaEntity {
         }
     )
     atributo:string
+
     @Column({
         type:'integer'
     })

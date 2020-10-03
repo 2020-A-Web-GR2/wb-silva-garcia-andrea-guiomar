@@ -1,0 +1,25 @@
+<%- include('../compartido/menu/menuAdmin')%>
+<link rel="stylesheet" href="/css/formulario-admin.css">
+
+
+
+<% const existeid = typeof id != 'undefined'%>
+
+<section class="viajes">
+
+
+<form action="<%= existeid ? '/escalas/vista/aniadir/'+id :'/escalas/vista/añadir/null'%>" method="POST">
+    <% if(typeof error != 'undefined') {%>
+    <p>MENSAJE ERROR: <%=error%></p>
+    <%}%>
+
+    <label for="lugar_escalaID">Lugar de escala:</label>
+    <input class="controls" id="lugar_escalaID" type="text" name="lugar_escala">
+    <br>
+    <label for="tiempo_escalaID">Tiempo de escala:</label>
+    <input class="controls" id="tiempo_escalaID" type="text" name="tiempo_escala">
+    <br>
+
+    <button class="botons" type="submit">CREAR</button>
+</form>
+    </section>

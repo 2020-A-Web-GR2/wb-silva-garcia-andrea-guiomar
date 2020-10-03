@@ -1,0 +1,32 @@
+<h1>Reservar</h1>
+<link rel="stylesheet" href="/css/tabla.css">
+<%- include('../compartido/menu/menuCliente')%>
+
+<table>
+    <tr>
+
+        <th>Fecha Salida</th>
+        <th>Puerta Abordaje </th>
+        <th>Costo del Boleto</th>
+        <th>Numero de Asientos</th>
+        <th>Total </th>
+        <th>Acciones</th>
+    </tr>
+
+    <% arregloBoleto.forEach((objeto)=>{ %>
+        <tr>
+            <td><%= objeto.fecha_salida%></td>
+            <td><%= objeto.puerta_abordaje%></td>
+            <td><%= objeto.costo_boleto%></td>
+            <td><%= numero_asiento_reservado%></td>
+            <td><%= Number(objeto.costo_boleto) * Number(numero_asiento_reservado) %></td>
+            <td>
+                <form action="/reserva/vista/datos/<%= objeto.id_Boleto%>/<%= idVuelo %>/<%= id %>" method="Get">
+                    <button>Reservar</button>
+                </form>
+            </td>
+        </tr>
+    <% } ) %>
+
+</table>
+

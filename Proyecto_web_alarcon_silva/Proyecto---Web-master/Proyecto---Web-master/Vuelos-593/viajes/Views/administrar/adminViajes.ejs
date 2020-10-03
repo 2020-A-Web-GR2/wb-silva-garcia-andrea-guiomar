@@ -1,0 +1,92 @@
+<%- include('../compartido/menu/menuAdmin')%>
+<link rel="stylesheet" href="/css/formulario-admin.css">
+<% const existevuelo = typeof vuelo != 'undefined'%>
+<%console.log("vuelo",existevuelo)%>
+<% let existeasientosDisponibles = typeof asientos_diponibles2!== 'undefined' %>
+<%console.log("vuelo",existeasientosDisponibles)%>
+<% let existeasientosOcupados= typeof  asientos_ocupados2!== 'undefined' %>
+<% let existelugarestino= typeof lugar_destino2 !== 'undefined' %>
+<% let existelugarorigen = typeof lugar_origen2 !== 'undefined' %>
+<% let existeopciones= typeof estado_vuelo2  !== 'undefined' %>
+<% let existeipovuelo= typeof tipo_vuelo2 !== 'undefined' %>
+<h1>ADMINSITRAR VIAJES</h1>
+<%if(existevuelo){%>
+    <%console.log("vuelo",existevuelo)%>
+    <% existeasientosDisponibles = true %>
+    <% existeasientosOcupados = true %>
+    <% existelugarestino = true %>
+    <% existelugarorigen = true %>
+    <% existeRango = true %>
+    <% existeopciones = true %>
+    <% existeipovuelo = true %>
+    <% asientos_diponibles2 = vuelo.asientos_diponibles %>
+    <% asientos_ocupados2= vuelo.asientos_ocupados %>
+    <% lugar_destino2 = vuelo.lugar_destino %>
+    <% lugar_origen2 = vuelo.lugar_origen %>
+    <% estado_vuelo2 = vuelo.estado_vuelo %>
+    <% tipo_vuelo2 = vuelo.tipo_vuelo %>
+<%}%>
+<body>
+
+<% if(typeof error != 'undefined') {%>
+<p>MENSAJE ERROR: <%=error%></p>
+<%}%>
+
+<section class="viajes">
+<form action="<%= existevuelo ? '/vuelo/vista/editarviajes/'+vuelo.id_Vuelo: '/adminViajesVista'%>" method="POST">
+    <label for="asientosdiponiblesID">Asientos diponibles:</label>
+    <input class="controls" id="asientosdiponiblesID" type="text"
+    <% if(existeasientosDisponibles){%>
+           disabled
+            <%}%>
+           name="asientos_diponibles" value="<%= existeasientosDisponibles ? asientos_diponibles2 : '' %>">
+    <br>
+
+    <label for="asientosocupadosID">Asientos ocupados:</label>
+    <input class="controls" id="asientosocupadosID" type="text"
+    <% if(existeasientosOcupados){%>
+           disabled
+            <%}%>
+           name="asientos_ocupados" value="<%= existeasientosOcupados ? asientos_ocupados2 : '' %>">
+    <br>
+    <label for="destinoID ">Destino:</label>
+    <input class="controls" id="destinoID " type="text"
+    <% if(existelugarestino){%>
+           disabled
+            <%}%>
+           name="lugar_destino" value="<%= existelugarestino ? lugar_destino2 : '' %>">
+    <br>
+    <label for="orienID">Origen:</label>
+    <input class="controls" id="orienID" type="text"
+    <% if(existelugarorigen){%>
+           disabled
+            <%}%>
+           name="lugar_origen" value="<%= existelugarorigen ? lugar_origen2 : '' %>">
+    <br>
+
+    <label for="cars">Estado de vuelo:</label>
+
+    <select class="controls" id="estado_vueloID" name="estado_vuelo2">
+        <option value="atiempo">Atiempo</option>
+        <option value="cancelado">Cancelado</option>
+        <option value="atrasado">Atrasado</option>
+    </select>
+
+
+
+<%console.log("buscando....",estado_vuelo2)%>
+
+
+    <br>
+    <label for="tipo_vueloID">Tipo de vuelo:</label>
+    <input class="controls" id="tipo_vueloID"
+    <% if(existeipovuelo){%>
+           disabled
+            <%}%>
+           type="text" name="tipo_vuelo" value="<%= existeipovuelo ? tipo_vuelo2 : '' %>">
+    <br>
+
+    <button class="botons" type="submit"><%= existevuelo ? 'Editar' : 'Crear'%></button>
+</form>
+</section>
+</body>

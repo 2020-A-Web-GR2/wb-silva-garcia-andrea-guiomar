@@ -1,0 +1,23 @@
+<table>
+    <tr>
+        <td for="fechaReserva">Nombre:</td>
+        <td><%=Andrea%></td>
+        <td for="fechaReserva">Apellido:</td>
+        <td><%=Silva%></td>
+
+    </tr>
+    <tr>
+        <form action="<%= existeid ? '/asiento/vista/reservarAsientos/'+id :'/escalas/vista/reservarAsientos/null'%>" method="POST">
+
+            <td for="pasajerosID">Pasajeros:</td>
+           <td> <input class="controls" id="pasajerosID " type="number" name="numero_asiento_reservado"></td>
+            <td="claseID">Clase:</td>
+            <td><input class="controls" id="claseID" type="text" name="tipo_asiento_reservado" ></td>
+            <td>
+            <button class="botons">Reservar</button>
+            </td>
+
+        </form>
+    </tr>
+
+</table>

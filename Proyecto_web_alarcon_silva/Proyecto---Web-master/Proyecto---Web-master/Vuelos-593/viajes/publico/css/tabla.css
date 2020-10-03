@@ -1,0 +1,82 @@
+body{
+
+    font-family: "Century Gothic";
+    font-size: 20px;
+}
+
+#main-container{
+    margin: 150px auto;
+    width: 600px;
+}
+
+table{
+    background-color: lightblue;
+    text-align: center;
+    border-collapse: collapse;
+    width: 70%;
+    align-content: center;
+    align-self: center;
+    align-items: center;
+
+
+}
+
+th, td{
+    padding: 30px;
+    font-size: 20px;
+    text-align: center;
+}
+
+thead{
+    background-color: #246355;
+    border-bottom: solid 5px #0F362D;
+    color: lightseagreen;
+}
+
+tr:nth-child(even){
+    background-color: whitesmoke;
+}
+
+tr:hover td{
+    background-color: darkolivegreen;
+    color: white;
+}
+button{
+    text-decoration: none;
+    padding: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-family: helvetica;
+    font-weight: 300;
+    font-size: 18px;
+    font-family: "Century Gothic";
+    color: white;
+    background-color: darkgray;
+    border-radius: 12px;
+    border: 3px double black;
+}
+button:hover{
+    opacity: 0.6;
+    text-decoration: none;
+}
+.controls {
+    width: 100%;
+    background: #24303c;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    border: 1px solid #1f53c5;
+    font-family: 'calibri';
+    font-size: 18px;
+    color: white;
+}
+.clientes .botons {
+    width: 70%;
+    background: #1f53c5;
+    border: none;
+    padding: 12px;
+    color: white;
+    margin: 16px 0;
+    font-size: 16px;
+}
+

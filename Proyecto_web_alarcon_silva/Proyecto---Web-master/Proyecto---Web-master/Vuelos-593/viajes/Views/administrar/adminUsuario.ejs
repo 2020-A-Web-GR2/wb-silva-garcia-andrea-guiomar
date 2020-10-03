@@ -1,0 +1,30 @@
+<link rel="stylesheet" href="/css/tabla.css">
+<%- include('../compartido/menu/menuAdmin')%>
+
+<div class="table-responsive">
+    <table class="table">
+
+        <tr>
+            <!--table header-->
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Edad</th>
+            <th>Correo electrónico</th>
+
+        </tr>
+
+
+        <% arreglousuario.forEach( (objeto)=>{ %>
+            <tr>
+                <td><%= objeto.nombre_usuario %></td>
+                <td><%= objeto.apellido_usuario %></td>
+                <td><%= objeto.edad_usuario %></td>
+                <td><%= objeto.correo_usuario %></td>
+
+
+
+            </tr>
+        <% } ) %>
+
+    </table>
+</div>
