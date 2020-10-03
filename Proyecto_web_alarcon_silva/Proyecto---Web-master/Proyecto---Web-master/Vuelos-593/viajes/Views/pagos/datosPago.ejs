@@ -1,0 +1,79 @@
+<link rel="stylesheet" href="/css/pagos.css">
+<link rel="stylesheet" href="/css/tabla.css">
+
+<h1>Pantalla de Pagos</h1>
+<body>
+
+
+<section class="clientes">
+    <h4>Datos de reserva</h4>
+
+<form action="/reserva/vista/reservarVuelo/<%= arregloBoleto.id_Boleto%>/<%= arregloVuelo.id_Vuelo%>/<%= arregloAsiento.id_Asiento%>" method="POST">
+    <table border="1">
+        <tr>
+            <td for="fechaReserva">Fecha de Reserva:</td>
+           <td><input class="controls" id="fechaReserva" type="date" name="fecha_reserva"></td>
+
+        </tr>
+   <tr>
+    <td for="tipo">Tipo:</td>
+    <td><input class="controls" id="tipo" type="text" name="tipo"></td>
+   </tr>
+        <tr>
+    <td for="observaciones">Observaciones:</td>
+    <td><input class="controls" id="observaciones" type="text" name="observaciones" value="Ninguna" disabled
+        ></td>
+
+        </tr>
+        <tr>
+    <td  for="estado">Estado Reserva:</td>
+    <td><input  class="controls" id="estado" type="text" name="estado_reserva" value="Activo" disabled></td>
+
+        </tr>
+
+    <tr>
+
+        <td>Origen</td>
+        <td><%= arregloVuelo.lugar_destino%></td>
+    </tr>
+        <tr>
+        <td>Destino </td>
+            <td><%= arregloVuelo.lugar_origen%></td>
+        </tr>
+        <tr>
+            <td>Tipo de vuelo</td>
+            <td><%= arregloVuelo.tipo_vuelo%></td>
+        </tr>
+        <tr>
+            <td>Fecha de Salida</td>
+            <td><%= arregloBoleto.fecha_salida%></td>
+        </tr>
+        <tr>
+            <td>Costo de Boleto</td>
+
+            <td><%= arregloBoleto.costo_boleto%></td>
+        </tr>
+        <tr>
+            <td>Puerta de Abordaje</td>
+            <td><%= arregloBoleto.puerta_abordaje%></td>
+
+        </tr>
+<tr>
+    <td>Numero de Asientos</td>
+    <td><%= arregloAsiento.numero_asiento_reservado%></td>
+</tr>
+        <tr>
+            <td>Tipo de Asientos</td>
+            <td><%= arregloAsiento.tipo_asiento_reservado%></td>
+        </tr>
+
+
+
+</table>
+    <button class="botons">Pagar</button>
+
+
+</form>
+
+</section>
+</body>

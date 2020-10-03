@@ -1,0 +1,23 @@
+<link rel="stylesheet" href="/css/login.css">
+
+<body>
+
+<form action="/rolUsuario/loginVista"method="POST">
+    <h2>
+        Inicio de Sesión
+    </h2>
+
+    <% if(typeof error != 'undefined') {%>
+    <p>MENSAJE ERROR: <%=error%></p>
+    <%}%>
+
+    <input id="correoID" type="email" placeholder="Correo" name="correo_usuario">
+    <br>
+
+    <input id="contraseniaID" type="password" placeholder="Contraseña" name="contrasenia">
+    <br>
+    <button class="botons">Inciar Sesión</button>
+</form>
+
+
+</body>

@@ -2,12 +2,12 @@
 <section class="carta">
 <% const existecarta = typeof carta != 'undefined'%>
 
-<% let existeNombreMonstruo = typeof nombre_mostruo !== 'undefined' %>
-<% let existeTipoMonstruo = typeof tipo_monstruo!== 'undefined' %>
+<% let existeNombreMonstruo = typeof nombre_mostruo2 !== 'undefined' %>
+<% let existeTipoMonstruo = typeof tipo_monstruo2!== 'undefined' %>
 <% let existeEfecto= typeof efecto !== 'undefined' %>
 <% let existeAtributo= typeof atributo !== 'undefined' %>
 <% let existeRango = typeof rango !== 'undefined' %>
-<% let existeAtaqueDefensa= typeof ataque_defencsa !== 'undefined' %>
+<% let existeAtaqueDefensa= typeof ataque_defencsa2 !== 'undefined' %>
 
 
 <h1> <%= existecarta ? 'Editar' : 'Crear'%> carta</h1>
@@ -19,12 +19,12 @@
     <% existeAtributo = true %>
     <% existeRango = true %>
     <% existeAtaqueDefensa = true %>
-    <% nombre_mostruo = carta.nombre_mostruo %>
-    <% tipo_monstruo = carta.tipo_monstruo %>
+    <% nombre_mostruo2 = carta.nombre_mostruo %>
+    <% tipo_monstruo2 = carta.tipo_monstruo %>
     <% efecto = carta.efecto %>
     <% atributo = carta.atributo %>
     <% rango = carta.rango %>
-    <% ataque_defencsa = carta.ataque_defencsa %>
+    <% ataque_defencsa2 = carta.ataque_defencsa %>
 <%}%>
 
 
@@ -39,14 +39,14 @@
     <input  class="controls" id="nombreID" type="text"  <% if(existeNombreMonstruo){%>
            disabled
             <%}%>
-           name="nombre_mostruo" value="<%= existeNombreMonstruo ? nombre_mostruo : '' %>">
+           name="nombre_mostruo" value="<%= existeNombreMonstruo ? nombre_mostruo2 : '' %>">
     <br>
 
     <label for="tipoMonstruoID">Tipo de mostruo:</label>
     <input  class="controls" id="tipoMonstruoID" type="text"  <% if(existeTipoMonstruo){%>
            disabled
             <%}%>
-           name=tipo_monstruo value="<%= existeTipoMonstruo ? tipo_monstruo : '' %>">
+           name=tipo_monstruo value="<%= existeTipoMonstruo ? tipo_monstruo2 : '' %>">
     <br>
 
     <label for="efectoID">Efecto:</label>
@@ -74,7 +74,7 @@
     <input  class="controls" id="ataqueDefensaID" type="text"
 
            name="ataque_defencsa"
-           value="<%= existeAtaqueDefensa ? ataque_defencsa : '' %>">
+           value="<%= existeAtaqueDefensa ? ataque_defencsa2 : '' %>">
     <br>
     <button class="botons" type="submit">Enviar</button>
 

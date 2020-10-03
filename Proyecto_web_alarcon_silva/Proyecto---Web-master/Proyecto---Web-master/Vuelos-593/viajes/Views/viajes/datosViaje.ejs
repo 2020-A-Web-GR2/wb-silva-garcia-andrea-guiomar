@@ -1,0 +1,28 @@
+<link rel="stylesheet" href="/css/formulario-cliente.css">
+<%- include('../compartido/menu/menuCliente')%>
+
+<body>
+
+<% if(typeof error != 'undefined') {%>
+<p>MENSAJE ERROR: <%=error%></p>
+<%}%>
+
+<section class="clientes">
+<h1>Datos del viaje</h1>
+
+<% const existeid = typeof id != 'undefined'%>
+
+<form action="<%= existeid ? '/asiento/vista/reservarAsientos/'+id :'/asiento/vista/reservarAsientos/null'%>" method="POST">
+
+    <label for="pasajerosID">Pasajeros:</label>
+    <input class="controls" id="pasajerosID " type="number" name="numero_asiento_reservado">
+    <br>
+    <label for="claseID">Clase:</label>
+    <input class="controls" id="claseID" type="text" name="tipo_asiento_reservado" >
+    <br>
+    <button class="botons">Reservar</button>
+
+</form>
+</section>
+</body>
+

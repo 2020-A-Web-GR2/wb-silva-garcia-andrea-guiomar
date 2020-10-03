@@ -1,0 +1,119 @@
+<link rel="stylesheet" href="/css/pagos.css">
+<link rel="stylesheet" href="/css/tabla.css">
+
+<h1>Pantalla de Pagos</h1>
+<body>
+<section class="clientes">
+    <form action="/pagos/pagarVista/<%= arregloBoleto.id_Boleto%>/ <%= arregloAsiento.numero_asiento_reservado*arregloBoleto.costo_boleto%>/<%= arregloVuelo.id_Vuelo%>/<%= arregloAsiento.id_Asiento%>" method="POST">
+        <table>
+            <tr>
+                <td>
+                    Tipo de pago:
+                </td>
+                <td>
+                    <input class="controls" id="tipoPago" type="text" name="tipo_pago">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Monto Total:
+                </td>
+                <td>
+                    <%= arregloAsiento.numero_asiento_reservado*arregloBoleto.costo_boleto%>
+                </td>
+            </tr>
+            <tr>
+               <td>
+                   Número de tarjeta:
+               </td>
+                <td>
+                    <input class="controls" id="numTarjeta" type="text" name="numero_tarjeta">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Dígito de seguridad:
+                </td>
+                <td>
+                    <input class="controls" id="digito" type="text" name="digito_seguridad">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Fecha de caducidad:
+                </td>
+                <td>
+                    <input class="controls" id="fecha" type="date" name="fecha_caducidad">
+                </td>
+            </tr>
+
+
+
+            <tr>
+                <td for="nombreID">NOMBRE:</td>
+                <td>
+                    <%= usuario.nombre_usuario%>
+                </td>
+            </tr>
+            <tr>
+                <td for="apellidoID">APELLIDO::</td>
+                <td>
+                    <%= usuario.apellido_usuario%>
+                </td>
+            </tr>
+            <tr>
+                <td for="correoID">CORREO:</td>
+                <td>
+                    <%= usuario.correo_usuario%>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    Origen
+                </td>
+                <td>
+                    <%= arregloVuelo.lugar_origen%>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Destino
+                </td>
+                <td>
+                    <%= arregloVuelo.lugar_destino%>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Asientos reservados_
+                </td>
+                <td>
+                    <%= arregloAsiento.numero_asiento_reservado%>
+                </td>
+            </tr>
+                <td>Puerta de abordaje</td>
+                <td>
+                    <%= arregloBoleto.puerta_abordaje%>
+                </td>
+            <tr>
+                <td>Costo del boleto</td>
+                <td>
+                    <%= arregloBoleto.costo_boleto%>
+                </td>
+            </tr>
+
+
+
+
+
+
+
+
+
+        </table>
+        <button class="botons" type="submit">Pagar boleto</button>
+    </form>
+</section>
+
+</body>

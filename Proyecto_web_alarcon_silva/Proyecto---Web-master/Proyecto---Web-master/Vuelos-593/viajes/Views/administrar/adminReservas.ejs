@@ -1,0 +1,96 @@
+<link rel="stylesheet" href="/css/tabla.css">
+<%- include('../compartido/menu/menuAdmin')%>
+
+<div class="table-responsive">
+    <table class="table">
+
+        <tr>
+            <!--table header-->
+            <th>Estado de la reserva</th>
+            <th>Observaciones</th>
+            <th>Fecha de reserva</th>
+            <th>Tipo</th>
+            <th>Asientos reservados</th>
+            <th>Nombre</th>
+            <th>Destino</th>
+            <th>Origen</th>
+
+
+        </tr>
+
+
+        <% arreglocabecera.forEach( (objeto2)=>{ %>
+            <tr>
+
+                <td><%= objeto2.estado_reserva %></td>
+                <td><%= objeto2.observaciones %></td>
+              <% objeto2.reservas.forEach(  (objeto)=> {%>
+              <td>  <%=objeto.fecha_reserva%>
+
+                   <% }) %></td>
+                <% objeto2.reservas.forEach(  (objeto)=> {%>
+                <td>  <%=objeto.tipo%>
+
+                    <% }) %></td>
+                <% objeto2.reservas.forEach(  (objeto)=> {%>
+                <td> <%=objeto.asiento.numero_asiento_reservado%>
+
+                    <% }) %></td>
+
+                <% arreglousuario.forEach(  (objeto)=> {%>
+
+                <%objeto.cabeceraReservas.forEach((objeto3)=>{%>
+                    <%if(objeto2.id_cabecera_reserva==objeto3.id_cabecera_reserva){%>
+                <td>
+                    <%= objeto.nombre_usuario%>
+                    </td>
+                <%}%>
+
+                <%})%>
+
+                <%})%>
+
+                <% objeto2.reservas.forEach(  (objeto)=> {%>
+
+                    <% arreglovuelo.forEach(  (objeto4)=> {%>
+                    <%objeto4.asientos.forEach((objeto5)=>{%>
+
+                    <%if(objeto5.id_Asiento==objeto.asiento.id_Asiento){%>
+                        <td>
+                            <%= objeto4.lugar_destino%>
+                        </td>
+                    <%}%>
+                    <%})%>
+
+                <% }) %>
+                <%})%>
+
+                <% objeto2.reservas.forEach(  (objeto)=> {%>
+
+                    <% arreglovuelo.forEach(  (objeto4)=> {%>
+                    <%objeto4.asientos.forEach((objeto5)=>{%>
+
+                    <%if(objeto5.id_Asiento==objeto.asiento.id_Asiento){%>
+                        <td>
+                            <%= objeto4.lugar_origen%>
+                        </td>
+                    <%}%>
+                    <%})%>
+
+                    <% }) %>
+                <%})%>
+
+
+
+
+
+
+
+            </tr>
+        <% } ) %>
+
+
+
+
+    </table>
+</div>

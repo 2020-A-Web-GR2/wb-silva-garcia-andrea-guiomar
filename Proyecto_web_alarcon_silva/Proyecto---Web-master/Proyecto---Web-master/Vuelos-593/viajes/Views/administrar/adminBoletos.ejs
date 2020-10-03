@@ -1,0 +1,22 @@
+<%- include('../compartido/menu/menuAdmin')%>
+<link rel="stylesheet" href="/css/formulario-admin.css">
+
+<% if(typeof error != 'undefined') {%>
+<p>MENSAJE ERROR: <%=error%></p>
+<%}%>
+
+<section class="viajes">
+<form action="/boleto/vista/aniadir_boleto" method="POST">
+    <label for="fecha_salidaID">Fecha de salida:</label>
+    <input class="controls" id="fecha_salidaID" type="date" name="fecha_salida">
+    <br>
+    <label for="costo_boletoID">Costo del boleto:</label>
+    <input class="controls" id="costo_boletoID" type="number" name="costo_boleto">
+    <br>
+    <label for="puerta_abordajeID">Puerta de abordaje:</label>
+    <input class="controls" id="puerta_abordajeID" type="text" name="puerta_abordaje">
+    <br>
+
+    <button  class="botons" type="submit">CREAR</button>
+</form>
+    </section>
